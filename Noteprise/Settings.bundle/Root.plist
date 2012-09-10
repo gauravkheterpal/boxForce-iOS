@@ -58,32 +58,6 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Evernote</string>
-		</dict>
-		<dict>
-			<key>Key</key>
-			<string>evernote_login_host_pref</string>
-			<key>Titles</key>
-			<array>
-				<string>PRODUCTION_LOGIN_HOST_TITLE</string>
-				<string>SANDBOX_LOGIN_HOST_TITLE</string>
-			</array>
-			<key>Type</key>
-			<string>PSMultiValueSpecifier</string>
-			<key>Title</key>
-			<string>LOGIN_HOST_TITLE</string>
-			<key>DefaultValue</key>
-			<string>www.evernote.com</string>
-			<key>Values</key>
-			<array>
-				<string>www.evernote.com</string>
-				<string>sandbox.evernote.com</string>
-			</array>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-			<key>Title</key>
 			<string>GROUP_TITLE_APPLICATION_INFO</string>
 		</dict>
 		<dict>
@@ -95,7 +69,7 @@
 			<string>VERSION_TITLE</string>
 			<key>Titles</key>
 			<array>
-				<string>2.0.0.0000</string>
+				<string>1.0.0.0000</string>
 			</array>
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>

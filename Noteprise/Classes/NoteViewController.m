@@ -117,7 +117,7 @@
 - (void)operation:(BoxOperation *)op willBeginForPath:(NSString *)path {
 	NSLog(@"lockout the UI here");
     //[Utility showCoverScreen];
-
+    saveToSFBarBtn.enabled = NO;
     DebugLog(@"filePath:%@", path);
     progressView.hidden = NO;
     [progressView setProgress:0];
@@ -138,6 +138,7 @@
 }
 - (void)operation:(BoxOperation *)op didCompleteForPath:(NSString *)path response:(BoxOperationResponse)response{
     progressView.hidden = YES;
+    saveToSFBarBtn.enabled = YES;
     [progressView setProgress:0];
     //NSData *fileData = [NSData dataWithContentsOfFile:path];
     NSArray *temp = [path componentsSeparatedByString:@"/"]; 

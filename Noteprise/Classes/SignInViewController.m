@@ -25,7 +25,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
 {
     [super viewDidLoad];
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    [self changeBkgrndImgWithOrientation:orientation];
+    //[self changeBkgrndImgWithOrientation:orientation];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -34,7 +34,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
-
+/*
 -(void)changeBkgrndImgWithOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
        if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
@@ -57,6 +57,7 @@ static const CGFloat iPhone_LANDSCAPE_KEYBOARD_HEIGHT = 205;
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self changeBkgrndImgWithOrientation:toInterfaceOrientation];
 }
+ */
 -(BOOL)validate{
     if([Utility isBlank:userNameTxt.text] || [Utility isBlank:pswdTxt.text]){
         return NO;
