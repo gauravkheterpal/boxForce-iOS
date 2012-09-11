@@ -33,7 +33,7 @@
 #import "CustomBlueToolbar.h"
 NSString * parrentTaskID ;
 NSString * accountID ;
-int selectedAccIdx;
+int selectedRecordId;
 NSString* selectedObj,*selectedObjID;
 @implementation RootViewController
 @synthesize attachmentData;
@@ -76,7 +76,7 @@ NSString* selectedObj,*selectedObjID;
     
 }
 -(void)viewDidAppear:(BOOL)animated{
-    selectedAccIdx=-999;
+    selectedRecordId = -999;
     // create a toolbar where we can place some buttons
     [self initToolbarButtons];
     
@@ -296,16 +296,16 @@ NSString* selectedObj,*selectedObjID;
         }
             else
             {
-                if(selectedAccIdx == -999) {   
+                if(selectedRecordId == -999) {   
                     [Utility hideCoverScreen];
-                    [Utility showAlert:[NSString stringWithFormat:@"Please select %@ to map with",[sfobj valueForKey:OBJ_NAME]]];
+                    [Utility showAlert:[NSString stringWithFormat:@"Please select %@ to map with",sfobj]];
                 } else {
                     [self showLoadingLblWithText:progress_dialog_salesforce_record_updating_message];
                     NSString *filePath = [[Utility applicationDocumentsDirectory] stringByAppendingPathComponent:fName];
                     NSData *fileData = [NSData dataWithContentsOfFile:filePath];
                     NSString * base64Str =  [fileData  base64EncodedString];
                     NSMutableDictionary * fields =[[NSMutableDictionary alloc] init];
-                    [fields setValue:[[self.dataRows objectAtIndex:selectedAccIdx] valueForKey:@"Id"] forKey:@"ParentId"];
+                    [fields setValue:[[self.dataRows objectAtIndex:selectedRecordId] valueForKey:@"Id"] forKey:@"ParentId"];
                     [fields setValue:fName forKey:@"Name"];
                     [fields setValue:base64Str forKey:@"Body"];
                     
@@ -350,12 +350,12 @@ NSString* selectedObj,*selectedObjID;
             
             //----------------------------------------------------------------------------------------------------
             selectedCount = 0;
-            if(selectedAccIdx == -999) {   
+            if(selectedRecordId == -999) {   
                 [Utility hideCoverScreen];
                 [Utility showAlert:[NSString stringWithFormat:@"Please select %@ to map with",[sfobj valueForKey:OBJ_NAME]]];
             } else {
                 [self showLoadingLblWithText:progress_dialog_salesforce_record_updating_message];
-                SFRestRequest * request =    [[SFRestAPI sharedInstance] requestForUpdateWithObjectType:[sfobj valueForKey:OBJ_NAME] objectId:[[self.dataRows objectAtIndex:selectedAccIdx] valueForKey:@"Id"] fields:fields];
+                SFRestRequest * request =    [[SFRestAPI sharedInstance] requestForUpdateWithObjectType:[sfobj valueForKey:OBJ_NAME] objectId:[[self.dataRows objectAtIndex:selectedRecordId] valueForKey:@"Id"] fields:fields];
                 [[SFRestAPI sharedInstance] send:request delegate:self];
                 selectedCount ++;
             }
@@ -660,7 +660,7 @@ NSString* selectedObj,*selectedObjID;
         [_tableView deselectRowAtIndexPath:indexPath animated:YES];
         [_tableView reloadData];
     } else {
-        selectedAccIdx=indexPath.row;
+        selectedRecordId=indexPath.row;
         }
     DebugLog(@"sel obj:%@",[self.dataRows objectAtIndex:indexPath.row]);
 }

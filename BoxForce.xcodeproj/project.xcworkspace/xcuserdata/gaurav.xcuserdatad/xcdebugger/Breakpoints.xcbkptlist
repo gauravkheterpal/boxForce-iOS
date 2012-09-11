@@ -9,21 +9,7 @@
          continueAfterRunningActions = "No"
          isPathRelative = "0"
          filePath = "/boxForce-iOS/Noteprise/Classes/RootViewController.m"
-         timestampString = "369040016.390505"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "278"
-         endingLineNumber = "278"
-         landmarkName = "-addAttachmentForFileName:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "0"
-         filePath = "/boxForce-iOS/Noteprise/Classes/RootViewController.m"
-         timestampString = "369040788.208811"
+         timestampString = "369056153.019961"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "283"
@@ -37,11 +23,53 @@
          continueAfterRunningActions = "No"
          isPathRelative = "0"
          filePath = "/boxForce-iOS/Noteprise/Classes/RootViewController.m"
-         timestampString = "369041127.835406"
+         timestampString = "369056153.019961"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "292"
          endingLineNumber = "292"
+         landmarkName = "-addAttachmentForFileName:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "0"
+         filePath = "/boxForce-iOS/Noteprise/Classes/NotesListViewController.m"
+         timestampString = "369047810.775252"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "78"
+         endingLineNumber = "78"
+         landmarkName = "-getFoldersAsync:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "0"
+         filePath = "/boxForce-iOS/Noteprise/Classes/RootViewController.m"
+         timestampString = "369056153.019961"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "656"
+         endingLineNumber = "656"
+         landmarkName = "-tableView:didSelectRowAtIndexPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "0"
+         filePath = "/boxForce-iOS/Noteprise/Classes/RootViewController.m"
+         timestampString = "369056153.019961"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "312"
+         endingLineNumber = "312"
          landmarkName = "-addAttachmentForFileName:"
          landmarkType = "5">
       </FileBreakpoint>
