@@ -89,7 +89,7 @@ NSString* selectedObj,*selectedObjID;
     //[toolbar setBarStyle: UIBarStyleBlackOpaque];
     
     // create an array for the buttons
-    /*NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:3];
+    NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:3];
     // create a spacer between the buttons
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
                                initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -123,7 +123,7 @@ NSString* selectedObj,*selectedObjID;
         [cancelButton release];
     }
     
-    */
+    
     UIImage* saveBtnImage = [UIImage imageNamed:@"Save.png"];
     UIImage* saveBtnDoneImage = [UIImage imageNamed:@"Save_down.png"];
     UIButton *saveButton = [[UIButton alloc] initWithFrame:BAR_BUTTON_FRAME];
@@ -133,13 +133,14 @@ NSString* selectedObj,*selectedObjID;
     [saveButton setShowsTouchWhenHighlighted:YES];
     UIBarButtonItem *saveBarButton =[[UIBarButtonItem alloc] initWithCustomView:saveButton];
     
-    //[buttons addObject:saveBarButton];
+    [buttons addObject:saveBarButton];
     [saveButton release];
         
-    //[toolbar setItems:buttons];
+    [toolbar setItems:buttons];
     // place the toolbar into the navigation bar
-    self.navigationItem.rightBarButtonItem = saveBarButton;
-    //[toolbar release];
+    self.navigationItem.rightBarButtonItem =  [[[UIBarButtonItem alloc]
+                                                initWithCustomView:toolbar] autorelease];
+    [toolbar release];
     
 }
 
@@ -272,31 +273,51 @@ NSString* selectedObj,*selectedObjID;
     NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
     NSString *sfobj =  [stdDefaults valueForKey:SFOBJ_WITH_ATTACHEMNT_TO_MAP_KEY];
     if(sfobj){
-        if(selectedAccIdx == -999) {   
-            [Utility hideCoverScreen];
-            [Utility showAlert:[NSString stringWithFormat:@"Please select %@ to map with",[sfobj valueForKey:OBJ_NAME]]];
-        } else {
-            [self showLoadingLblWithText:progress_dialog_salesforce_record_updating_message];
-            NSString *filePath = [[Utility applicationDocumentsDirectory] stringByAppendingPathComponent:fName]; 
-            DebugLog(@"addAttachmentFor filePath:%@", filePath);
-            DebugLog(@"selected record id:%@", [[self.dataRows objectAtIndex:selectedAccIdx] valueForKey:@"Id"]);
-            NSData *fileData = [NSData dataWithContentsOfFile:filePath];
-            DebugLog(@"uploaded atta data:%d",fileData.length);
-            NSString * base64Str =  [fileData  base64EncodedString];
-            NSMutableDictionary * fields =[[NSMutableDictionary alloc] init];
-            
-            // parrentTaskID = @"00T9000000AaYSsEAN";
-            
-            [fields setValue:[[self.dataRows objectAtIndex:selectedAccIdx] valueForKey:@"Id"] forKey:@"ParentId"];
-            [fields setValue:fName forKey:@"Name"];
-            [fields setValue:base64Str forKey:@"Body"];
-            
-            SFRestRequest * request =  [[SFRestAPI sharedInstance] requestForCreateWithObjectType:@"Attachment" fields:fields];
-            [[SFRestAPI sharedInstance] send:request delegate:self];
+        
+        
+        selectedCount = 0;
+       
+        if(self.inEditMode){
+            for(int i = 0;i < [selectedRow count] ; i++) {
+                if ([[selectedRow objectAtIndex:i] boolValue] == YES) {
+                    [self showLoadingLblWithText:progress_dialog_salesforce_record_updating_message];
+                    NSString *filePath = [[Utility applicationDocumentsDirectory] stringByAppendingPathComponent:fName];
+                    NSData *fileData = [NSData dataWithContentsOfFile:filePath];
+                    NSString * base64Str =  [fileData  base64EncodedString];
+                    NSMutableDictionary * fields =[[NSMutableDictionary alloc] init];
+                    [fields setValue:[[self.dataRows objectAtIndex:i] valueForKey:@"Id"] forKey:@"ParentId"];
+                    [fields setValue:fName forKey:@"Name"];
+                    [fields setValue:base64Str forKey:@"Body"];
+                
+                    SFRestRequest * request =  [[SFRestAPI sharedInstance] requestForCreateWithObjectType:@"Attachment" fields:fields];
+                    [[SFRestAPI sharedInstance] send:request delegate:self];
+                }
+            }
         }
+            else
+            {
+                if(selectedAccIdx == -999) {   
+                    [Utility hideCoverScreen];
+                    [Utility showAlert:[NSString stringWithFormat:@"Please select %@ to map with",[sfobj valueForKey:OBJ_NAME]]];
+                } else {
+                    [self showLoadingLblWithText:progress_dialog_salesforce_record_updating_message];
+                    NSString *filePath = [[Utility applicationDocumentsDirectory] stringByAppendingPathComponent:fName];
+                    NSData *fileData = [NSData dataWithContentsOfFile:filePath];
+                    NSString * base64Str =  [fileData  base64EncodedString];
+                    NSMutableDictionary * fields =[[NSMutableDictionary alloc] init];
+                    [fields setValue:[[self.dataRows objectAtIndex:selectedAccIdx] valueForKey:@"Id"] forKey:@"ParentId"];
+                    [fields setValue:fName forKey:@"Name"];
+                    [fields setValue:base64Str forKey:@"Body"];
+                    
+                    SFRestRequest * request =  [[SFRestAPI sharedInstance] requestForCreateWithObjectType:@"Attachment" fields:fields];
+                    [[SFRestAPI sharedInstance] send:request delegate:self];
+                }
+        
+        }
+      
     } else {
         [Utility hideCoverScreen];
-        [Utility showAlert:SF_OBJECT_FIELD_MISSING_MSG];
+        [Utility showAlert:SF_OBJECT_MISSING_MSG];
     }
     
 }
@@ -632,15 +653,15 @@ NSString* selectedObj,*selectedObjID;
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)_tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    /*if(self.inEditMode) {
+    if(self.inEditMode) {
         BOOL selected = [[selectedRow objectAtIndex:[indexPath row]] boolValue];
         [selectedRow replaceObjectAtIndex:[indexPath row] withObject:[NSNumber numberWithBool:!selected]];
         DebugLog(@"%@",selectedRow);
         [_tableView deselectRowAtIndexPath:indexPath animated:YES];
         [_tableView reloadData];
-    } else {*/
+    } else {
         selectedAccIdx=indexPath.row;
-   // }
+        }
     DebugLog(@"sel obj:%@",[self.dataRows objectAtIndex:indexPath.row]);
 }
 
