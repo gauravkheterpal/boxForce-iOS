@@ -19,7 +19,7 @@
 @interface NotesListViewController : UIViewController <UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,AddNotesViewDelegate,MyPopoverDelegate>{
     
     NSMutableArray *listOfItems;
-    //NSMutableArray *indexArray;
+    NSMutableArray *fileObjArray;
     //NSMutableArray *noteBooksArr;
     IBOutlet UITableView *notesTbl;
     IBOutlet UILabel *loadingLbl;
@@ -41,5 +41,6 @@
     BoxFolder * _folderModel;
     IBOutlet 	UIActivityIndicatorView * _activityIndicator;
 }
+@property (nonatomic, retain) NSMutableArray *fileObjArray;
 
 @end

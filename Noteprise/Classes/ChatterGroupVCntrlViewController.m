@@ -186,7 +186,7 @@
         }*/
         
         if([self.noteContent length] > 1000){
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Noteprise" message:CHATTER_LIMIT_CROSSED_ALERT_MSG delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"BoxForce" message:CHATTER_LIMIT_CROSSED_ALERT_MSG delegate:self cancelButtonTitle:ALERT_NEGATIVE_BUTTON_TEXT otherButtonTitles:ALERT_POSITIVE_BUTTON_TEXT, nil];
             alert.tag = CHATTER_POST_TO_GROUP_LIMIT_ALERT_TAG;
             [alert show];
             [alert release];

@@ -16,12 +16,14 @@
 #import "BoxFolderXMLBuilder.h"
 #import "BoxLoginViewController.h"
 @implementation NotesListViewController
+@synthesize fileObjArray;
 
  
 
 //viewDidLoad method declared in RootViewController.m
 - (void)viewDidLoad {
     [super viewDidLoad];
+    fileObjArray = [[NSMutableArray alloc] init];
     //self.title = @"Noteprise";
     if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Top_nav_768x44.png"] forBarMetrics:UIBarMetricsDefault];
@@ -62,9 +64,19 @@
 		[BoxCommonUISetup popupAlertWithTitle:@"Error" andText:@"Could not access your box account at this time. Please check your internet connection and try again" andDelegate:nil];
 		[self.navigationController popViewControllerAnimated:YES];
 	}
-	
-	_folderModel = [folderModel retain];
+    _folderModel = [folderModel retain];
     DebugLog(@"_folderModel:%d", [[_folderModel objectsInFolder]count]);
+    
+    for (int i =0; i< [[_folderModel objectsInFolder] count]; i++) {
+        BoxObject * curModel = (BoxObject*)[[_folderModel objectsInFolder] objectAtIndex:i];
+        if(![curModel isKindOfClass:[BoxFolder class]]) {
+            [fileObjArray addObject:[[_folderModel objectsInFolder] objectAtIndex:i]];
+            DebugLog(@"name of object = %@ , id of object is = %@ array count = %d", curModel.objectName,curModel.objectId,[fileObjArray count] );
+        }
+        
+    }
+    DebugLog(@"array count = %d ,Array = %@",[fileObjArray count], fileObjArray);
+    
     //listOfItems = [[_folderModel objectsInFolder]retain];
     [notesTbl setDelegate:self];
     [notesTbl setDataSource:self];
@@ -89,7 +101,8 @@
 	// Step 2c
 	if(responseType == boxFolderDownloadResponseTypeFolderSuccessfullyRetrieved) {
 		//Step 2d
-		NSLog(@"%@", [folderModel objectToString]);
+		NSLog(@"folderModel = %@", [folderModel objectToString]);
+        DebugLog(@"Dictionary = %@",[folderModel objectDescription]);
 	}
 	
 	[self performSelectorOnMainThread:@selector(folderRetrievalCallback:) withObject:folderModel waitUntilDone:YES];
@@ -631,7 +644,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     selectedRowIndex = indexPath.row;
-    BoxObject * curModel = (BoxObject*)[_folderModel.objectsInFolder objectAtIndex:[indexPath row]];
+    //BoxObject * curModel = (BoxObject*)[_folderModel.objectsInFolder objectAtIndex:[indexPath row]];
+    BoxObject * curModel = (BoxObject*)[fileObjArray objectAtIndex:[indexPath row]];
     if([curModel isKindOfClass:[BoxFolder class]]) {
         [Utility showAlert:@"It is folder.Please select a file"];
         return;
@@ -682,7 +696,8 @@
  ************************************************************/
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_folderModel.objectsInFolder count];
+    //return [_folderModel.objectsInFolder count];
+    return [fileObjArray count];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     //[self initConextAndFetchController];
@@ -697,11 +712,11 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier]autorelease];
     }
-    
-    //NSString *cellValue = [[listOfItems objectAtIndex:indexPath.row]valueForKey:NOTE_KEY];
-    BoxObject * curModel = (BoxObject*)[_folderModel.objectsInFolder objectAtIndex:[indexPath row]];
+
+    //BoxObject * curModel = (BoxObject*)[_folderModel.objectsInFolder objectAtIndex:[indexPath row]];
+    BoxObject * curModel = (BoxObject*)[fileObjArray objectAtIndex:[indexPath row]];
     cell.textLabel.text = curModel.objectName;
-    //cell.textLabel.text = cellValue;
+    //cell.textLabel.text = curModel.objectName;
     cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:13];
     cell.textLabel.textColor = [UIColor blackColor];
     cell.detailTextLabel.text = [Utility humanFriendlyFileSize:[curModel.objectSize longValue]];// [NSString stringWithFormat:@"%@ bytes",curModel.objectSize];

@@ -109,7 +109,7 @@ UIImageView *imgView;
 
 +(void)showAlert:(NSString*)message
 {
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Noteprise" message:message delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"BoxForce" message:message delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
     [alert show];
     [alert release];
 }

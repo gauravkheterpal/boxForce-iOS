@@ -112,7 +112,7 @@
 
 - (NSString *)objectToString {
 	return [NSString stringWithFormat:
-			@"File Name: %@, Id: %@, Description: %@, Size: %@, Created Time: %@, Updated Time: %@, Number of Files: %@, isCollaborated: %@, Objects: %@",
+			@"Folder Name Log: %@, Id: %@, Description: %@, Size: %@, Created Time: %@, Updated Time: %@, Number of Files: %@, isCollaborated: %@, Objects: %@",
 			self.objectName,
 			self.objectId,
 			self.objectDescription,
